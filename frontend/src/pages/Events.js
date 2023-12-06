@@ -1,20 +1,21 @@
-import { Link } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-export default function EventsPage() {
-  return (
-    <>
-      <h2>Events</h2>
-      <ul>
-        <li>
-          <Link to="1">Event 1</Link>
-        </li>
-        <li>
-          <Link to="2">Event 2</Link>
-        </li>
-        <li>
-          <Link to="3">Event 3</Link>
-        </li>
-      </ul>
-    </>
-  );
+import EventsList from "../components/EventsList";
+
+function EventsPage() {
+  const data = useLoaderData();
+
+  return <EventsList events={data.events} />;
+}
+
+export default EventsPage;
+
+export async function loader() {
+  const response = await fetch("http://localhost:8080/events");
+
+  if (!response.ok) {
+    // later
+  } else {
+    return response;
+  }
 }
